@@ -1,0 +1,54 @@
+{
+  "name": "@panhezeng/ucloud-ufile",
+  "description": "ucloud upload file jssdk",
+  "version": "1.0.0",
+  "author": "潘何增 <panhezeng@gmail.com> (http://apsay.com/)",
+  "contributors": [
+    "ucloud (https://github.com/ufilesdk-dev/ufile-jssdk)"
+  ],
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "ucloud",
+    "ufile jssdk",
+    "upload file",
+    "javascript"
+  ],
+  "homepage": "https://github.com/panhezeng/ucloud-ufile-js#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/panhezeng/ucloud-ufile-js.git"
+  },
+  "files": [
+    "dist",
+    "src",
+    "package.json",
+    "README"
+  ],
+  "main": "dist/ucloud-ufile.min.js",
+  "scripts": {
+    "dev:example": "webpack-dev-server --mode development --open --hot --config webpack.example.config.js",
+    "build:example": "rm -rf docs && mkdir docs && cp index.html docs && webpack --mode production --config webpack.example.config.js",
+    "build": "webpack --mode production"
+  },
+  "dependencies": {
+    "react": "latest",
+    "react-dom": "latest",
+    "spark-md5": "latest"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^4.16.4",
+    "webpack-cli": "^2.1.5",
+    "webpack-dev-server": "^3.1.4"
+  }
+}
