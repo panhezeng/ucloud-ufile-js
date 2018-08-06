@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import UCloudUFile from '../dist/ucloud-ufile.min'
+import UCloudUFile from '../dist/ucloud-ufile.min.js'
 //import { UCloudUFile } from '../src'
 
 class App extends React.Component {
