@@ -203,7 +203,6 @@ export class UCloudUFile {
       let onreadystatechange = function () {
         if (ajax.readyState === 4) {
           if (ajax.status === 200) {
-
             let eTag = ajax.getResponseHeader('ETag')
             let successRes = {
               contentType: ajax.getResponseHeader('Content-Type'),
@@ -434,6 +433,7 @@ export class UCloudUFile {
       let requestToken = {
         method: method,
         file: file,
+        fileName: fileName,
         md5Required: false
       }
 
@@ -471,6 +471,7 @@ export class UCloudUFile {
     this.getContentMd5(file, (md5) => {
 
       const fileRename = md5 + file.name.replace(/.+(\..+)$/, '$1')
+//      const fileRename = file.name
 
       const successHit = (res) => {
         console.log('successHit', res)
