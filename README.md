@@ -6,7 +6,7 @@
 
 示例代码目录 /example
 
-示例用的是mock接口， 尽可能模拟了ucloud接口的Response结果，实际应用中这三个bucketName = '', bucketUrl = '', tokenServerUrl = ''参数，需要用户自己配置
+示例用的是mock接口， 尽可能模拟了ucloud接口的Response，实际应用中这三个bucketName = '', bucketUrl = '', tokenServerUrl = ''参数，需要用户自己配置
 
 ## 说明
 
@@ -41,5 +41,9 @@ npm run dev:example
 
 # 编译插件
 npm run build
+
+# 发版
+npm version patch
+npm publish --access public
 ```
 
