@@ -28,6 +28,16 @@ bug修复：
 
 `npm i @panhezeng/ucloud-ufile -S`
 
+```javascript
+import UCloudUFile from '@panhezeng/ucloud-ufile'
+```
+
+or 
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@panhezeng/ucloud-ufile@latest/dist/ucloud-ufile.min.js"></script>
+```
+
 具体读本模块示例代码和ucloud官方官方文档(https://github.com/ufilesdk-dev/ufile-jssdk)
 
 ## 编译
