@@ -11,7 +11,7 @@ class App extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.fileInput = React.createRef()
-    this.ufile = new UCloudUFile('example-ucloud', 'https://easy-mock.com/mock/5ae1806b6ad7b17bb7d2cb58/element-ui-plus/upload/example', 'https://easy-mock.com/mock/5ae1806b6ad7b17bb7d2cb58/element-ui-plus/upload/token')
+    this.ufile = new UCloudUFile('example-ucloud', 'http://private-87040-publicexample.apiary-mock.com/upload', 'http://private-87040-publicexample.apiary-mock.com/upload/token')
   }
 
   upload (file) {

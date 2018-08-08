@@ -8,6 +8,8 @@
 
 示例用的是mock接口， 尽可能模拟了ucloud接口的Response，实际应用中这三个bucketName = '', bucketUrl = '', tokenServerUrl = ''参数，需要用户自己配置
 
+示例使用的mock接口服务可能会出现无响应等错误
+
 ## 说明
 
 基于ucloud官方jssdk，在保证官方api命名，参数，返回结果一致的前提下，进行严重bug修复和代码优化精简等，并且提供npm使用方式。主要动了秒传和分片上传相关代码，其他api代码几乎和官方一样，有bug提issue，或者自己fork修改。
