@@ -6,9 +6,9 @@
 
 示例代码目录 /example
 
-示例用的是mock接口， 尽可能模拟了ucloud接口的Response，实际应用中这三个bucketName = '', bucketUrl = '', tokenServerUrl = ''参数，需要用户自己配置
+示例使用的mock接口模拟了ucloud接口的Response，实际应用中这三个bucketName = '', bucketUrl = '', tokenServerUrl = ''参数，需要用户自己配置
 
-示例使用的mock接口服务可能会出现无响应等错误
+示例使用的apiary mock服务每次Request获得的Response都是不变的。免费服务可能会出现无响应等错误
 
 ## 说明
 
