@@ -1,5 +1,7 @@
 const path = require('path')
-module.exports = {
+const BeforeRunWebpackPlugin = require('@panhezeng/before-run-webpack-plugin')
+
+const config = {
   entry: './example/index.js',
   output: {
     path: path.resolve(__dirname, 'docs'),
@@ -21,6 +23,14 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  devServer: {},
+  plugins: [],
+  devServer: {}
+}
+
+module.exports = (env, argv) => {
+  if (argv.mode === 'production') {
+    config.plugins.push(new BeforeRunWebpackPlugin({sed: 'react'}))
+  }
+  return config
 }
 
