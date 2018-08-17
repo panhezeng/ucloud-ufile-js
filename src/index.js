@@ -466,11 +466,11 @@ export class UCloudUFile {
     }, error)
   }
 
-  // 先秒传，如果秒传失败再分片上传，用文件的md5作为文件名，保证唯一性，否则同名文件会被覆盖
+  // 先秒传，如果秒传失败再分片上传，用文件的md5和文件大小作为文件名，在最大程度上实现同样文件秒传，但是同名不一样的文件不会误覆盖
   hitSliceUpload (file, success, error, progress) {
     this.getContentMd5(file, (md5) => {
 
-      const fileRename = md5 + file.name.replace(/.+(\..+)$/, '$1')
+      const fileRename = (md5 + '-' + file.size).substr(0, 160) + file.name.replace(/.+(\..+)$/, '$1')
 //      const fileRename = file.name
 
       const successHit = (res) => {
