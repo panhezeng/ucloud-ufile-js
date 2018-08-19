@@ -466,45 +466,42 @@ export class UCloudUFile {
     }, error)
   }
 
-  // 先秒传，如果秒传失败再分片上传，用文件的md5和文件大小作为文件名，在最大程度上实现同样文件秒传，但是同名不一样的文件不会误覆盖
+  // 先秒传，如果秒传失败再分片上传，用文件名,文件时间,和文件大小作为文件名，在最大程度上实现同样文件秒传，但是同名不一样的文件不会误覆盖
   hitSliceUpload (file, success, error, progress) {
-    this.getContentMd5(file, (md5) => {
+    const fileRename = `${file.name}-${file.lastModified}-${file.size}`.substr(0, 160) + file.name.replace(/.+(\..+)$/, '$1')
+    //      const fileRename = file.name
 
-      const fileRename = (md5 + '-' + file.size).substr(0, 160) + file.name.replace(/.+(\..+)$/, '$1')
-//      const fileRename = file.name
+    const successHit = (res) => {
+      console.log('successHit', res)
+      success({Key: this.addPrefix(fileRename)})
+    }
 
-      const successHit = (res) => {
-        console.log('successHit', res)
-        success({Key: this.addPrefix(fileRename)})
+    const errorHit = (res) => {
+      console.log('errorHit', res)
+      const sliceOptions = {
+        file: file,
+        fileRename: fileRename
       }
 
-      const errorHit = (res) => {
-        console.log('errorHit', res)
-        const sliceOptions = {
-          file: file,
-          fileRename: fileRename
-        }
-
-        const successSlice = (res) => {
-          try {
-            console.log('successSlice', res)
-            success(JSON.parse(res))
-          } catch (e) {
-            error()
-          }
-        }
-        const errorSlice = () => {
-          console.log('errorSlice')
+      const successSlice = (res) => {
+        try {
+          console.log('successSlice', res)
+          success(JSON.parse(res))
+        } catch (e) {
           error()
         }
-        this.sliceUpload(sliceOptions, successSlice, errorSlice, progress)
       }
-      progress()
-      this.hitUpload(file, successHit, errorHit, fileRename)
-    })
+      const errorSlice = () => {
+        console.log('errorSlice')
+        error()
+      }
+      this.sliceUpload(sliceOptions, successSlice, errorSlice, progress)
+    }
+    progress()
+    this.hitUpload(file, successHit, errorHit, fileRename)
   }
 
-// 普通上传
+  // 普通上传
   uploadFile (options, success, error, progress) {
     this.check(options)
     let that = this
@@ -576,10 +573,9 @@ export class UCloudUFile {
 
       if (successList.length == fileList.length) {
         success(successList)
-
       } else {
         currentIndex++
-        self.uploadFile({file: fileList[currentIndex]}, successCallBack, errorCallBack, progressCallBack)
+        self.hitSliceUpload(fileList[currentIndex], successCallBack, errorCallBack, progressCallBack)
       }
     }
 
@@ -587,6 +583,9 @@ export class UCloudUFile {
       errorList.push(res.file)
 
       if ((successList.length + errorList.length) == fileList.length) {
+        if (successList.length) {
+          success(successList)
+        }
         error({
           errorList: errorList,
           successList: successList
@@ -598,7 +597,7 @@ export class UCloudUFile {
     }
 
     progress(0)
-    self.uploadFile({file: fileList[currentIndex]}, successCallBack, errorCallBack, progressCallBack)
+    self.hitSliceUpload(fileList[currentIndex], successCallBack, errorCallBack, progressCallBack)
   }
 
 // 表单上传
