@@ -468,7 +468,12 @@ export class UCloudUFile {
 
   // 先秒传，如果秒传失败再分片上传，用文件名,文件时间,和文件大小作为文件名，在最大程度上实现同样文件秒传，但是同名不一样的文件不会误覆盖
   hitSliceUpload (file, success, error, progress) {
-    const fileRename = `${file.name}-lastModified${file.lastModified}-size${file.size}`.substr(0, 160) + file.name.replace(/.+(\..+)$/, '$1')
+    let suffix = ''
+    let index = file.name.lastIndexOf('.')
+    if (file.type && index !== -1) {
+      suffix = file.name.substring(index)
+    }
+    const fileRename = `${file.name}-lastModified${file.lastModified}-size${file.size}`.substr(0, 160) + suffix
     //      const fileRename = file.name
 
     const successHit = (res) => {
