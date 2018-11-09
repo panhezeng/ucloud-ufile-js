@@ -29,14 +29,12 @@ class App extends React.Component {
           res = { Key: file.name }
         }
         res.url = `http://dummyimage.com/200x100/50B347/FFF&text=${res.Key}`
-        this.ufile.uploading = false
         console.log('success', res)
         this.setState({ file: res.url })
         resolve({ data: res })
       }
 
       const error = (res) => {
-        this.ufile.uploading = false
         reject(new Error('上传失败'))
       }
 
