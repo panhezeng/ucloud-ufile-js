@@ -2,12 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import UCloudUFile from '../dist/ucloud-ufile.min.js'
+
 //import { UCloudUFile } from '../src'
 
 class App extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {file: ''}
+    this.state = { file: '', name: '' }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.fileInput = React.createRef()
@@ -21,24 +22,17 @@ class App extends React.Component {
 
     return new Promise((resolve, reject) => {
 
-      if (this.ufile.uploading) {
-        console.log('上传中，稍等')
-        return
-      } else {
-        this.ufile.uploading = true
-      }
-
-      this.ufile.PREFIX = `Items/11933/${file.type}`
+      this.ufile.PREFIX = `example/${file.type}`
 
       const success = (res) => {
         if (Object.prototype.toString.call(res) !== '[object Object]') {
-          res = {Key: file.name}
+          res = { Key: file.name }
         }
-        res.url = `http://digital.hammacher.com/${res.Key}`
+        res.url = `http://dummyimage.com/200x100/50B347/FFF&text=${res.Key}`
         this.ufile.uploading = false
         console.log('success', res)
-        this.setState({file: res.url})
-        resolve({data: res})
+        this.setState({ file: res.url })
+        resolve({ data: res })
       }
 
       const error = (res) => {
@@ -48,7 +42,7 @@ class App extends React.Component {
 
       const progress = (res) => {
         if (Object.prototype.toString.call(res) !== '[object Object]') {
-          res = {value: 0}
+          res = { value: 0 }
         }
         console.log('progress', res)
 //          var tips = ''
@@ -70,9 +64,9 @@ class App extends React.Component {
   handleChange (event) {
     const file = this.fileInput.current.files[0]
     if (file) {
-      this.setState({file: file.name})
+      this.setState({ name: file.name })
     } else {
-      this.setState({file: ''})
+      this.setState({ name: '' })
     }
   }
 
@@ -95,8 +89,9 @@ class App extends React.Component {
           <br/>
           <button type="submit">Submit</button>
         </form>
-        <div>file: {this.state.file}</div>
-        <img style={{width:'100px',height:'100px'}} src={this.state.file}/>
+        <div>fileName: {this.state.name}</div>
+        {this.state.file && (<img style={{ width: '100px', height: '100px' }} src={this.state.file}/>)}
+
       </div>
     )
   }
