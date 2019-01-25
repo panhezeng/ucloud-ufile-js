@@ -473,7 +473,13 @@ export class UCloudUFile {
     if (file.type && index !== -1) {
       suffix = file.name.substring(index)
     }
-    const fileRename = `${file.name}-lastModified${file.lastModified}-size${file.size}`.substr(0, 160) + suffix
+    // 用文件名,文件时间,和文件大小作为文件夹名，在最大程度上实现同名但不一样的文件不会误覆盖
+    const unique = `${file.name}-lastModified${parseInt(
+      file.lastModified / 1000
+    )}-size${file.size}`
+      .replace(/[\\/:*?"<>|]/, "")
+      .substr(0, 160);
+    const fileRename = `${unique}/${file.name}`;
     //      const fileRename = file.name
 
     const successHit = (res) => {
