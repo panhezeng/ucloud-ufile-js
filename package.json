@@ -32,24 +32,42 @@
     "build": "webpack --mode production"
   },
   "dependencies": {
-    "react": "latest",
-    "react-dom": "latest",
     "spark-md5": "latest"
+  },
+  "devDependencies": {
+    "react": "~16",
+    "react-dom": "~16",
+    "husky": "^1.3.1",
+    "lint-staged": "^8.1.3",
+    "prettier": "^1.16.4",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "@panhezeng/before-run-webpack-plugin": "^1.0.7",
+    "babel-loader": "^8.0.5",
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,css,md,jsx,vue,ts,less}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "engines": {
+    "node": ">= 10.0.0",
+    "npm": ">= 6.0.0"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ],
-  "devDependencies": {
-    "@babel/cli": "latest",
-    "@babel/core": "latest",
-    "@babel/preset-env": "latest",
-    "@babel/preset-react": "latest",
-    "@panhezeng/before-run-webpack-plugin": "latest",
-    "babel-loader": "latest",
-    "webpack": "latest",
-    "webpack-cli": "latest",
-    "webpack-dev-server": "latest"
-  }
+  ]
 }
