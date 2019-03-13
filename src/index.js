@@ -586,7 +586,7 @@ export class UCloudUFile {
     const unique = `${file.name}-l${parseInt(
       file.lastModified / 1000
     )}-s${parseInt(file.size / 1024)}`
-      .replace(/[\\/:*?"<>|]/, "")
+      .replace(/[\\/:*?"<>|\r\n\s]/gm, "")
       .substr(0, 160);
 
     const fileRename = `${type}${unique}/${file.name}`;
