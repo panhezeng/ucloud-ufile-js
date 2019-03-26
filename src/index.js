@@ -583,13 +583,16 @@ export class UCloudUFile {
       type = suffix.substring(1) + "/";
     }
     // 用文件名,文件最后修改时间,和文件大小作为文件夹名，在最大程度上实现同名但不一样的文件不会误覆盖
-    const unique = `${file.name}-l${parseInt(
+    const name = file.name.replace(/[\\/:*?"<>|\r\n\s]/gm, "");
+    const size =
+      file.size > 1048576
+        ? `${parseInt(file.size / 1048576)}M`
+        : `${parseInt(file.size / 1024)}KB`;
+    const unique = `${parseInt(
       file.lastModified / 1000
-    )}-s${parseInt(file.size / 1024)}`
-      .replace(/[\\/:*?"<>|\r\n\s]/gm, "")
-      .substr(0, 160);
+    )}S-${size}-${name}`.substr(0, 100);
 
-    const fileRename = `${type}${unique}/${file.name}`;
+    const fileRename = `${type}${unique}/${name}`;
     //      const fileRename = file.name
 
     const successHit = res => {
