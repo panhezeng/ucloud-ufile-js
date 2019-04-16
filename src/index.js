@@ -575,15 +575,17 @@ export class UCloudUFile {
 
   // 先秒传，如果秒传失败再分片上传，用文件名,文件时间,和文件大小作为文件名，在最大程度上实现同样文件秒传，但是同名不一样的文件不会误覆盖
   hitSliceUpload(file, success, error, progress) {
+    const fullName = file.name.replace(/[\\/:*?"<>|\r\n\s]/gm, "");
+    const match = fullName.match(/(.*)\.(\w*)$/);
+    let name = fullName;
     let suffix = "";
-    let type = "";
-    let index = file.name.lastIndexOf(".");
-    if (index !== -1) {
-      suffix = file.name.substring(index);
-      type = suffix.substring(1) + "/";
+    if (
+      Object.prototype.toString.call(match) === "[object Array]" &&
+      match.length > 2
+    ) {
+      name = match[1];
+      suffix = match[2];
     }
-    // 用文件名,文件最后修改时间,和文件大小作为文件夹名，在最大程度上实现同名但不一样的文件不会误覆盖
-    const name = file.name.replace(/[\\/:*?"<>|\r\n\s]/gm, "");
     const size =
       file.size > 1048576
         ? `${parseInt(file.size / 1048576)}M`
@@ -592,7 +594,7 @@ export class UCloudUFile {
       file.lastModified / 1000
     )}S-${size}-${name}`.substr(0, 100);
 
-    const fileRename = `${type}${unique}/${name}`;
+    const fileRename = `${suffix}/${unique}/${fullName}`;
     //      const fileRename = file.name
 
     const successHit = res => {
